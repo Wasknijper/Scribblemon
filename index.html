@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>Scribblemon!</title>
+    
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this document -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+  <div id="overlay" class="hidden">
+    <div class="container">
+      <div class="row col-sm-8 col-sm-offset-2 border" id="textOverlay">
+      </div>
+    </div>
+  </div>
+    <div class="container">
+        <div class="row ">
+          <div class="col-sm-9">
+            <div class="col-sm-12">
+              <a class="btn btn-block btn-success border col-sm-9" href="#" role="button" id="train_button">Train!</a>
+            </div>
+          <div class="border col-sm-12">
+            <div class="col-sm-7">
+              <p>Messages:
+                <span id="messages">&nbsp;</span>
+              </p>  
+            </div>
+            <div class="col-sm-4 col-sm-offset-1">
+              <p>Current Location:<p>
+              <span id="location"></span>
+            </div>
+          <div class="row" id="background">
+            <div class="col-sm-6">
+              <img src="img/holder.png" id="chosen_pokemon_img" />
+            </div>
+            <div class="col-sm-6">
+              <img src="img/holder.png" id="target_pokemon_img" class="div" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <p><span id="chosen_pokemon"></span> Lvl: <span id="chosen_pokemon_lvl"></span></p>
+              <p>Exp needed for next lvl:</p>
+              <p><span id="exp_needed"></span></p>
+            </div>
+            <div class="col-sm-6">
+              <p class="target"> Hp: 
+                <progress id="hp_bar" max="0" value="100"></progress>
+              </p>
+              <p class="target">Wild <span id="target_pokemon"></span> appeared!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="col-sm-3 border" id="upgrades">
+          <p>Locations<p>
+            <ul id="places_list"></ul>
+          <p id="saveoptions" class="clearfix">Save options</p>
+          <div class="btn-toolbar col-sm-12">
+            <div class="btn-group btn-group-justified">
+              <div class="btn-group">
+                <button type="button" class="btn btn-custom bottomleft" id="saveBtn">Save</button>
+              </div>
+               <div class="btn-group">
+                <button type="button" class="btn btn-custom bottomright" id="wipeSave">Wipe Save</button>
+              </div>
+            </div>
+            <div class="btn-group btn-group-justified">
+              <div class="btn-group">
+                <button type="button" class="btn btn-custom topleft" id="importSave">Import</button>
+              </div>
+               <div class="btn-group">
+                <button type="button" class="btn btn-custom topright" id="exportSave">Export</button>
+              </div>
+            </div>
+            <p>Every minute the game will auto-save</p>
+          </div>
+          </div>
+        </div>
+    
+      <div class="row">
+        <div class="footer col-sm-12">
+          <p>Pokémon © 1995-2014 Nintendo, Creatures Inc., GAME FREAK inc., The Pokémon Company TM, ® Pokémon character names are trademarked by Nintendo. (I just made the code and scribbled the 'mons, feel free to use my scribbles as long as you link back!)</p>
+        </div> 
+      </div>
+    </div><!-- /container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+      <script src="pokemon_js.js"></script>
+  </body>
+</html>
