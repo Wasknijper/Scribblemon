@@ -315,6 +315,8 @@ window.onload = function() {
     });
 
     function setStarter() {
+        // Het wordt afgeraden om onnodig eval in je code te gebruiken. Google maar eens op 'JavaScript eval is evil'
+        // Ik raad je aan om dit anders op te lossen! 
         var clickedImg = eval(this.getAttribute('id'));
         userChoices.Pokemon = clickedImg;
         userChoices.Place = forest;
