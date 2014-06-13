@@ -3,15 +3,15 @@ Scribblemon
 
 Started as a project for my Programming class, but I'm continue develop it! http://scribblemon.net
 
-==============
+
 Working on now
 ==============
 
-Making a document outline for my new features, what edits I need to make and wich new variables I should add
-Drawing the evolutions of all the pokemon currently in the game.
-Fleshing out my catch Pokemon-idea.
+- Making a document outline for my new features, what edits I need to make and wich new variables I should add
+- Drawing the evolutions of all the pokemon currently in the game.
+- Fleshing out my catch Pokemon-idea.
 
-==============
+
 Future content
 ==============
 
