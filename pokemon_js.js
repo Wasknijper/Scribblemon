@@ -1,4 +1,5 @@
 /*global confirm , prompt , alert , window , math , document, console, setTimeout, localStorage, atob, btoa, setInterval*/
+/*jslint vars: true */ //Make ALL the vars!
 
 window.onload = function() {
     'use strict';
@@ -14,19 +15,21 @@ window.onload = function() {
             this.evolveName = evolveName;
             this.evolveLvl = evolveLvl;
             this.exp = exp;
-        },
+        };
 
-        Place = function (name, lvl, pokemon, baseExp) {
+    var Place = function (name, lvl, pokemon, baseExp) {
             this.name = name;
             this.lvl = lvl;
             this.pokemon = pokemon;
             this.baseExp = baseExp;
-        },
+        };
 
     //starter pokemon
-        bulbasaur = new Pokemon('Bulbasaur', 'Grass', 1, 45, true, "Ivysaur", 16, 0),
+    var bulbasaur = new Pokemon('Bulbasaur', 'Grass', 1, 45, true, "Ivysaur", 16, 0),
         squirtle = new Pokemon('Squirtle', 'Water', 1, 44, true, "Wartortle", 0, 0),
         charmander = new Pokemon('Charmander', 'Fire', 1, 39, true, "Charmeleon", 0, 0),
+        
+        //Evolution stuff
         //ivysaur = new Pokemon('Ivysaur', 'Grass', 1, 45, true, "Venusaur", 32, 0),
         //venusaur = new Pokemon('Venusaur', 'Grass', 1, 45, false, 0, 0),
         //charmeleon = new Pokemon('Charizard', "Fire", 1, )
@@ -183,92 +186,96 @@ window.onload = function() {
     //haal de unordered list op uit het docuemnt
         ulPlaces = getId("places_list"),
 
-        newRow,
+        newRow;
 
 
         //functie om een nieuwe target pokemon aan te roepen
-        newPokemon = function() {
-            //gebruik math.random om een willekeurige pokemon uit de array te kiezen
-            targetPokemon = userChoices.Place.pokemon[Math.floor(Math.random() * userChoices.Place.pokemon.length)];
-            //calculeer hoeveel hp de volgende pokemon heeft bron: http://pokemondb.net/pokebase/19109/what-is-the-formula-for-pokemon-hp
-            // ({[IV+2*Base Stat+([EVs]/4)+100] * Level}/100)+10
-            hpValue = hpMax = Math.floor((((Math.random() * 31) + 2 * targetPokemon.baseHp + (Math.random() * 120) / 4) * userChoices.Place.lvl) / 60 + 10 + Math.random() * userChoices.Place.lvl * (Math.random() * 10));
-            //wijs de max en value to aan de HTML elementen
-            hp.max = hpMax;
-            hp.value = hpValue;
-            //had een probleem met innerText in Firefox, vervangen door innerHTML, bron: http://stackoverflow.com/questions/1359469/innertext-works-in-ie-but-not-in-firefox
-            getId('target_pokemon').innerHTML = targetPokemon.name;
-            getId("target_pokemon_img").src = "img/" + targetPokemon.name.replace(/\s+/g, '-').toLowerCase() + ".png";
-        },
+    var newPokemon = function() {
+        //gebruik math.random om een willekeurige pokemon uit de array te kiezen
+        targetPokemon = userChoices.Place.pokemon[Math.floor(Math.random() * userChoices.Place.pokemon.length)];
+        //calculeer hoeveel hp de volgende pokemon heeft bron: http://pokemondb.net/pokebase/19109/what-is-the-formula-for-pokemon-hp
+        // ({[IV+2*Base Stat+([EVs]/4)+100] * Level}/100)+10
+        hpValue = hpMax = Math.floor((((Math.random() * 31) + 2 * targetPokemon.baseHp + (Math.random() * 120) / 4) * userChoices.Place.lvl) / 60 + 10 + Math.random() * userChoices.Place.lvl * (Math.random() * 10));
+        //wijs de max en value to aan de HTML elementen
+        hp.max = hpMax;
+        hp.value = hpValue;
+        //had een probleem met innerText in Firefox, vervangen door innerHTML, bron: http://stackoverflow.com/questions/1359469/innertext-works-in-ie-but-not-in-firefox
+        getId('target_pokemon').innerHTML = targetPokemon.name;
+        getId("target_pokemon_img").src = "img/" + targetPokemon.name.replace(/\s+/g, '-').toLowerCase() + ".png";
+    };
 
-        pickPlace = function() {
-            var i = 0, idname, li, p;
-            function checkLvlAndPlace() {
-                    //declareer clickedLi met de value id van de geklikte li zodat je deze kan gebruiken in de if-else
-                    //bron for nodeValue: http://www.w3schools.com/dom/prop_document_nodevalue.asp
-                    //Eval geeft een error in JSLint, maar ik gebruik het toch omdat als een 3e partij in het spelletje vals wilt spelen ze dat zelf maar moeten weten
-                var clickedLi = eval(this.getAttribute('id')),
-                    result;
-                if (userChoices.Pokemon.lvl >= clickedLi.lvl) {
-                    result = userChoices.Place = clickedLi;
+    var pickPlace = function() {
+        var i = 0, li, p, j = 0, liList;
+
+        //Eval vervanger! Lang maar niet evil. Bron: http://stackoverflow.com/questions/6968147/passing-parameters-on-event-listeners-with-loops
+        var setPlaceListeners = function(i) {
+            //sla de counter op in lokale variabel
+            var j = i;
+            //haal met locale variabele het juiste li element uit de array
+            liList[j].addEventListener("click", function() {
+                //vergelijk het lvl van de pokemon met de lvl van de plek waar je op klikt (de k-index uit de array)
+                if (userChoices.Pokemon.lvl >= places[j].lvl) {
+                    //hier zet je de plek waar je opklikt in het Userchoices object zodat deze kan worden opgeslagen en worden aan geroepen door andere functies of variabelen
+                    userChoices.Place = places[j];
+                    //Pokemon updaten
                     newPokemon();
                     getId('location').innerHTML = userChoices.Place.name;
-                    messages.innerHTML = "You and " + userChoices.Pokemon.name + " go to the " + clickedLi.name + ".";
+                    //message laten zien dat je 
+                    messages.innerHTML = "You and " + userChoices.Pokemon.name + " go to the " + places[j].name + ".";
                 } else {
-                    messages.innerHTML = "Your " + userChoices.Pokemon.name + " needs to be level " + clickedLi.lvl + " to train at the " + clickedLi.name + ".";
-                    return result;
+                    messages.innerHTML = "Your " + userChoices.Pokemon.name + " needs to be level " + places[j].lvl + " to train at the " + places[j].name + ".";
                 }
-            }
-            //laat de lijst met plekken zien. Bron: For loops uit Codecademy Loops, en W3Schools For Loops
-            for (i = 0; i < places.length; i += 1) {
-                //maak een nieuw list item aan
-                li = document.createElement("li");
-                p = document.createElement("p");
-                //http://stackoverflow.com/questions/9422974/createelement-with-id
-                idname = places[i].name.replace(/\s+/g, '');
-                idname.replace(/\s/g, "-");
-                li.setAttribute("id", idname.replace(/\s+/g, '-').toLowerCase());
-
-                ulPlaces.appendChild(li);
-                li.innerHTML = "<span>" + places[i].name + "</span>";
-                li.appendChild(p);
-                p.innerHTML = "Req. Lvl: " + places[i].lvl;
-
-                //voeg een eventListener toe
-                //http://stackoverflow.com/questions/9565831/how-to-get-id-of-an-element-whose-name-is-known-in-javascript
-                li.addEventListener("click", checkLvlAndPlace);//afsluiting event listener
-            }// afsluiting for loop
-        },
-
-    //functie om de html-waarde te updaten
-        updateLvlEnExp = function(exp, lvl) {
-            getId('chosen_pokemon_lvl').innerHTML = lvl;
-            if (userChoices.Pokemon.lvl < 100) {
-                getId('exp_needed').innerHTML = exp;
-            } else {
-                getId('exp_needed').innerHTML = "None, max lvl!";
-            }
-        },
-
-        expCounter = getId('exp_needed'),
-
-        save = function(totesSaved) {
-            localStorage.yourSave = btoa(totesSaved);
-            //console.log(localStorage['yourSave']);
+            });
         };
 
-    function updatePokemonEnLocation() {
+        //laat de lijst met plekken zien. Bron: For loops uit Codecademy Loops, en W3Schools For Loops
+        for (i = 0; i < places.length; i += 1) {
+            //maak een nieuw list item en p element aan
+            li = document.createElement("li");
+            p = document.createElement("p");
+
+            li.innerHTML = "<span>" + places[i].name + "</span>";
+            p.innerHTML = "Req. Lvl: " + places[i].lvl;
+
+            ulPlaces.appendChild(li);
+            li.appendChild(p);
+
+            liList = document.querySelectorAll('li');
+            setPlaceListeners(i);
+        }
+
+
+    };//einde PickPlace functie
+
+//functie om de html-waarde te updaten
+    var updateLvlEnExp = function(exp, lvl) {
+        getId('chosen_pokemon_lvl').innerHTML = lvl;
+        if (userChoices.Pokemon.lvl < 100) {
+            getId('exp_needed').innerHTML = exp;
+        } else {
+            getId('exp_needed').innerHTML = "None, max lvl!";
+        }
+    },
+
+        expCounter = getId('exp_needed');
+
+    var save = function(totesSaved) {
+        localStorage.yourSave = btoa(totesSaved);
+        //console.log(localStorage['yourSave']);
+    };
+
+    var updatePokemonEnLocation = function() {
         updateLvlEnExp(userChoices.Pokemon.exp, userChoices.Pokemon.lvl);
         getId('location').innerHTML = userChoices.Place.name;
         getId("chosen_pokemon_img").src = "img/" + userChoices.Pokemon.name.replace(/\s+/g, '-').toLowerCase() + ".png";
         getId('chosen_pokemon').innerHTML = userChoices.Pokemon.name;
-    }
+    };
 
         //yay, saving
-    function autoSave() {
+    var autoSave = function() {
         save(JSON.stringify(userChoices));
         messages.innerHTML = "Your game has been auto-saved!";
-    }
+    };
     //elke minut een een save
 
     //de save button
@@ -314,21 +321,26 @@ window.onload = function() {
 
     });
 
-    function setStarter() {
-        var clickedImg = eval(this.getAttribute('id'));
-        userChoices.Pokemon = clickedImg;
-        userChoices.Place = forest;
-        console.log(userChoices.Pokemon);
-        userChoices.Pokemon.exp = expNextLvl(userChoices.Pokemon.lvl);
+    var setStarter = function(i) {
+        var j = i;
 
-        updatePokemonEnLocation();
-        newPokemon();
-        pickPlace();
-        setInterval(autoSave, 60000);
-        if (userChoices.Pokemon === starters[0] || userChoices.Pokemon === starters[1] || userChoices.Pokemon === starters[2]) {
-            overlay.setAttribute('class', 'hidden');
-        }
-    }
+        img.addEventListener('click', function(){
+        
+            var clickedImg = starters[j];
+            userChoices.Pokemon = clickedImg;
+            userChoices.Place = forest;
+            console.log(userChoices.Pokemon);
+            userChoices.Pokemon.exp = expNextLvl(userChoices.Pokemon.lvl);
+
+            updatePokemonEnLocation();
+            newPokemon();
+            pickPlace();
+            setInterval(autoSave, 60000);
+            if (userChoices.Pokemon === starters[0] || userChoices.Pokemon === starters[1] || userChoices.Pokemon === starters[2]) {
+                overlay.setAttribute('class', 'hidden');
+            }
+        })
+    };
 
     //voor het beginnen eerst kijken of er al een save bestaat
     //http://stackoverflow.com/questions/3262605/html5-localstorage-check-if-item-isset
@@ -357,7 +369,8 @@ window.onload = function() {
 
             newRow.appendChild(div);
 
-            img.addEventListener('click', setStarter);
+            setStarter(i);
+            
 
         }
 
@@ -380,7 +393,7 @@ window.onload = function() {
         setInterval(autoSave, 60000);
     }
 
-    function train() {
+    var train = function() {
             //reken uit hoeveel schade jouw pokemon aanricht, minium dmg is level gedeeld door 2 en maximum is level kerer 1.2
             //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
         var max = userChoices.Pokemon.lvl * 1.3,
@@ -431,7 +444,7 @@ window.onload = function() {
             setTimeout(function() {getId('chosen_pokemon_img').removeAttribute("class"); }, 400);
             setTimeout(function() {getId('target_pokemon_img').removeAttribute("class"); }, 500);
         }
-    }
+    };
 
     getId('train_button').addEventListener("click", train);
 

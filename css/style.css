@@ -78,6 +78,7 @@ body {
 	display: block;
 	clear: left;
 	margin-bottom: -8px;
+	text-decoration: underline;
 }
 
 #upgrades ul li{
@@ -156,6 +157,17 @@ body {
 	border-style: solid;
 }
 
+.border_clickable{
+	border-width: 22px 25px;
+	-o-border-image: url(../img/border_button.png) 37 36 43 27 stretch stretch;
+	-icab-border-image: url(../img/border_button.png) 37 36 43 27 stretch stretch;
+	-khtml-border-image: url(../img/border_button.png) 37 36 43 27 stretch stretch;
+	-moz-border-image: url(../img/border_button.png) 37 36 43 27 stretch stretch;
+	-web-kit-border-image: url(../img/border_button.png) 37 36 43 27 stretch stretch;	
+	border-image: url(../img/border_button.png) 37 36 43 27 stretch stretch;
+	border-style: solid;
+}
+
 #target_pokemon_img{
 	float: right;
 }
@@ -164,7 +176,7 @@ progress {
     border: 0.1em solid;
 	background-color: white;
 	border-radius: 20px; 
-	color: white;
+	color: black;
 }  
 
 progress span {
@@ -198,10 +210,12 @@ progress::-moz-progress-bar {
 
 
 #train_button{
+	margin-top: 0.2em;
 	font-size: 1.4em;
 	background-color: white;
 	color: black;
 	height: 3em;
+	text-decoration: underline;
 }
 
 #train_button:active{
