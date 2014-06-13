@@ -15,6 +15,53 @@ body {
 	color: black;
 }
 
+
+/*check box css from: http://www.csscheckbox.com/ */
+input[type=checkbox].css-checkbox {
+	display:none;
+	float: right;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+	height: 22px;
+	display: inline-block;
+	line-height: 22px;
+	background-repeat: no-repeat;
+	background-position: right 0px;
+	vertical-align: middle;
+	cursor: pointer;
+	padding-right: 1em;
+
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+	background-position: right -22px;
+}
+label.css-label {
+	background-image:url('../img/toggle.png');
+	text-decoration: underline;
+	font-weight: normal;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+/*Einde css checkbox */
+#places_list, #save_divs{
+	display:none;
+}
+
+#location-toggle:checked + label.css-label + #places_list {
+  display: block;
+}
+
+#saveoptions:checked + label.css-label + #save_divs {
+  display: block;
+}
+
+
 .btn-custom {
   .button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
 }
@@ -58,7 +105,13 @@ body {
 }
 
 #upgrades{
-	height: 20em;
+	min-height: 20em;
+	max-height: 40em;
+}
+
+#upgrades h1{
+	margin-top: 0;
+	padding-top: 0;
 }
 
 #upgrades ul{
@@ -102,7 +155,7 @@ body {
     box-shadow: none;
 }
 
-.btn-toolbar p {
+#save_divs p {
 	font-size: 0.5em;
 }
 
